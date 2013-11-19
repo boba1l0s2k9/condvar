@@ -309,5 +309,5 @@ license text.
 [node-fibers]: https://github.com/laverdet/node-fibers
 [V8]: http://code.google.com/p/v8/
 [issue 758]: https://github.com/joyent/libuv/issues/758
-[LICENSE]: ./LICENSE
+[LICENSE]: https://raw.github.com/boba1l0s2k9/condvar/master/LICENSE
 
