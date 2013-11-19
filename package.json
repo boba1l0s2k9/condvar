@@ -10,7 +10,7 @@
         "boba1l0s2k9 <boba1l0s2k9@outlook.com> (https://github.com/boba1l0s2k9)"
     ],
     "engines": { "node": ">=0.6.0" },
-    "dependencies": { "UVRun": ">=0.0.0" },
+    "dependencies": { "uvrun": ">=0.0.0" },
     "repository": {
         "type" : "git",
         "url" : "https://github.com/boba1l0s2k9/condvar.git"

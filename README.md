@@ -5,7 +5,7 @@ CondVar - Conditional variables like AnyEvent::CondVar for node.js.
 # SYNOPSIS
 
 ```js
-var CondVar = require('CondVar');
+var CondVar = require('condvar');
 
 var cv = new CondVar;
 console.log("created a conditional variable");
@@ -73,7 +73,7 @@ Conditional variables start out "not ready", and become "ready" by calling
 conditional variable as a callback:
 
 ```js
-    var CondVar = require('CondVar');
+    var CondVar = require('condvar');
     var cv = new CondVar;
 
     setTimeout(cv, 1000);
@@ -93,7 +93,7 @@ callback is not supported, that is, recursive invocation of a blocking
 try.  Examples:
 
 ```js
-    var CondVar = require('CondVar');
+    var CondVar = require('condvar');
 
     // Example: basic use
     var cv = new CondVar;
@@ -124,7 +124,7 @@ then it will be called now.  If you don't provide a value, the default value
 will be `undefined`.  Example:
 
 ```js
-    var CondVar = require('CondVar');
+    var CondVar = require('condvar');
     var cv = new CondVar;
 
     cv.cb(function (cv_contains_hello) {
@@ -143,7 +143,7 @@ argument.  This provides a way for the sending side of a conditional variable
 to throw an exception on the receiving side.  Example:
 
 ```js
-    var CondVar = require('CondVar'),
+    var CondVar = require('condvar'),
              cv = new CondVar;
 
     // Just like send(), you can call it before/after recv() or from a callback
@@ -173,7 +173,7 @@ will be called when the counter goes to zero.  There is only one callback per
 conditional variable, and the last one set wins.  Example of basic use:
 
 ```js
-    var CondVar = require('CondVar'),
+    var CondVar = require('condvar'),
              cv = new CondVar;
 
     cv.begin();
