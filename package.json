@@ -1,0 +1,31 @@
+{
+    "name": "condvar",
+    "version": "0.0.1",
+    "description": "Conditional variables to simplify asynchronous code",
+    "author": "boba1l0s2k9 <boba1l0s2k9@outlook.com>",
+    "homepage": "https://github.com/boba1l0s2k9/condvar",
+    "keywords": ["condvar", "cv", "async", "flow control", "node"],
+    "main": "CondVar.js",
+    "contributors": [
+        "boba1l0s2k9 <boba1l0s2k9@outlook.com> (https://github.com/boba1l0s2k9)"
+    ],
+    "engines": { "node": ">=0.6.0" },
+    "dependencies": { "UVRun": ">=0.0.0" },
+    "repository": {
+        "type" : "git",
+        "url" : "https://github.com/boba1l0s2k9/condvar.git"
+    },
+    "bugs": {
+        "mail": "boba1l0s2k9@outlook.com",
+        "url": "https://github.com/boba1l0s2k9/condvar/issues"
+    },
+    "licenses": [
+        {
+            "type": "CC0",
+            "url": "https://github.com/boba1l0s2k9/condvar/raw/master/LICENSE"
+        }
+    ],
+    "scripts": {
+        "test": "node cv_test.js && node cv_err_test.js"
+    }
+}
