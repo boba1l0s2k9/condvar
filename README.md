@@ -72,12 +72,14 @@ Conditional variables start out "not ready", and become "ready" by calling
 `send()` or `croak()` on them, or using them as a callback.  Example using a 
 conditional variable as a callback:
 
+```js
     var CondVar = require('CondVar');
     var cv = new CondVar;
 
     setTimeout(cv, 1000);
     cv.recv();
     console.log("This will be printed after 1 second of waiting");
+```
 
 ## recv ()
 
@@ -90,6 +92,7 @@ callback is not supported, that is, recursive invocation of a blocking
 `recv()` is not allowed, and the `recv()` call will throw an exception if you 
 try.  Examples:
 
+```js
     var CondVar = require('CondVar');
 
     // Example: basic use
@@ -111,7 +114,7 @@ try.  Examples:
     setTimeout(function(){ cv2.recv(); cv1.send(); }, 1000);
     setTimeout(function(){ cv2.send();             }, 2000);
     cv1.recv(); // Because we're already waiting here on cv1
-
+```
 
 ## send ( [ value ] )
 
@@ -120,6 +123,7 @@ Place a value in the conditional variable.  If elsewhere code is waiting on
 then it will be called now.  If you don't provide a value, the default value 
 will be `undefined`.  Example:
 
+```js
     var CondVar = require('CondVar');
     var cv = new CondVar;
 
@@ -129,6 +133,7 @@ will be `undefined`.  Example:
     });
 
     cv.send('hello');
+```
 
 ## croak ( [ error ] )
 
@@ -137,6 +142,7 @@ This works similarly to `send()`, including supporting `cb()`, except that when
 argument.  This provides a way for the sending side of a conditional variable 
 to throw an exception on the receiving side.  Example:
 
+```js
     var CondVar = require('CondVar'),
              cv = new CondVar;
 
@@ -148,6 +154,7 @@ to throw an exception on the receiving side.  Example:
     } catch (e) {
         console.log("This will get printed: " + e);
     }
+```
 
 ## cb ( [ callback ] )
 
@@ -165,6 +172,7 @@ counter is decremented back down to zero via `end()`.  The optional callback
 will be called when the counter goes to zero.  There is only one callback per 
 conditional variable, and the last one set wins.  Example of basic use:
 
+```js
     var CondVar = require('CondVar'),
              cv = new CondVar;
 
@@ -187,6 +195,7 @@ conditional variable, and the last one set wins.  Example of basic use:
 
     cv2.recv();
     console.log("This won't get printed until all hosts have bene pinged");
+```
 
 ## end ()
 
@@ -282,7 +291,7 @@ This module is licensed under [CC0][], a kind of internationally-aware "public
 domain" license, or more properly said: a declaration of my affirmative intent 
 to waive the rights normally reserved under copyright law.  You're free to 
 copy, modify, sell for profit, etc, without any need to contact me, give me 
-attribution, reproduce the license text, etc.  See [COPYING][] for the full 
+attribution, reproduce the license text, etc.  See [LICENSE][] for the full 
 license text.
 
 [AE]: http://search.cpan.org/~mlehmann/AnyEvent-7.05/lib/AnyEvent.pm
@@ -300,5 +309,5 @@ license text.
 [node-fibers]: https://github.com/laverdet/node-fibers
 [V8]: http://code.google.com/p/v8/
 [issue 758]: https://github.com/joyent/libuv/issues/758
-[COPYING]: [./COPYING]
+[LICENSE]: [./LICENSE]
 
