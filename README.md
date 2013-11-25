@@ -335,7 +335,7 @@ license text.
 [example5]: https://raw.github.com/boba1l0s2k9/condvar/master/compared/5-http_request-using_condvar.js
 [uvbook-cv]: http://nikhilm.github.io/uvbook/threads.html#others
 [uv.h-cv]: https://github.com/joyent/libuv/blob/master/include/uv.h#L2012
-[blog-unraval]: http://www.gameclosure.com/blog/2013/03/unravelling-nested-callbacks-with-ff
+[blog-unravel]: http://www.gameclosure.com/blog/2013/03/unravelling-nested-callbacks-with-ff
 [promise-perf]: http://thanpol.as/javascript/promises-a-performance-hits-you-should-be-aware-of/
 [uvrun-patch]: https://github.com/creationix/uvrun/pull/1
 
