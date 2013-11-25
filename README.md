@@ -2,6 +2,10 @@
 
 CondVar - Conditional variables like AnyEvent::CondVar for node.js.
 
+# INSTALL
+
+    npm install condvar
+
 # SYNOPSIS
 
 ```js
@@ -59,6 +63,8 @@ of blocking / linear execution without actually stopping the event loop, and
 also without requiring changes to node.js, as in [node-fibers][].  I have 
 nothing bad to say about other approaches to simplifying asynchronous control 
 flow: if it works well for your needs, use it!
+
+# API
 
 ## new CondVar ( [ {"cb": function} ] )
 
@@ -209,7 +215,9 @@ If `send()` or `croak()` has been called this returns `true`, else `false`.
 
 # EXAMPLES
 
-TODO: insert example showing simple use of HTTP client.
+See a trivial [HTTP example][example5], which you can compare against the same
+idea implemented with [just callbacks][example3], or with 
+[Q promises][example4].
 
 # DETAILS
 
@@ -265,7 +273,7 @@ doing so would corrupt the stack and very likely cause node.js to crash.
 
    * Same idea and API in Perl: [AnyEvent][AE], [AnyEvent::CondVar][AE::CV]
    * Ideas in the same category, for JavaScript:
-       * [async.js][async.js]
+       * [async.js][]
        * [Q promises][Q]
        * [Many more][node-wiki-async]
 
@@ -294,6 +302,18 @@ copy, modify, sell for profit, etc, without any need to contact me, give me
 attribution, reproduce the license text, etc.  See [LICENSE][] for the full 
 license text.
 
+# TODO
+
+   * Mention that these conditional variables are in no way related to the
+     pthread-oriented conditional variables of libuv (e.g. those referenced in
+     the [book][uvbook-cv], or in [uv.h][uv.h-cv]).
+   * Make a conditional variable example comparable to this
+     [blog][blog-unravel].
+   * Benchmark the relative performance compared to other
+     [approaches][promise-perf].
+   * Mention that our dependency uvrun may not work on Windows until you modify
+     package.json as descriped [here][uvrun-patch].
+
 [AE]: http://search.cpan.org/~mlehmann/AnyEvent-7.05/lib/AnyEvent.pm
 [AE::CV]: http://search.cpan.org/~mlehmann/AnyEvent-7.05/lib/AnyEvent.pm#CONDITION_VARIABLES
 [CC0]: http://creativecommons.org/publicdomain/zero/1.0/legalcode
@@ -310,4 +330,12 @@ license text.
 [V8]: http://code.google.com/p/v8/
 [issue 758]: https://github.com/joyent/libuv/issues/758
 [LICENSE]: https://raw.github.com/boba1l0s2k9/condvar/master/LICENSE
+[example3]: https://raw.github.com/boba1l0s2k9/condvar/master/compared/3-http_request-no_condvar-short.js
+[example4]: https://raw.github.com/boba1l0s2k9/condvar/master/compared/4-http_request-using_q_promises.js
+[example5]: https://raw.github.com/boba1l0s2k9/condvar/master/compared/5-http_request-using_condvar.js
+[uvbook-cv]: http://nikhilm.github.io/uvbook/threads.html#others
+[uv.h-cv]: https://github.com/joyent/libuv/blob/master/include/uv.h#L2012
+[blog-unraval]: http://www.gameclosure.com/blog/2013/03/unravelling-nested-callbacks-with-ff
+[promise-perf]: http://thanpol.as/javascript/promises-a-performance-hits-you-should-be-aware-of/
+[uvrun-patch]: https://github.com/creationix/uvrun/pull/1
 
