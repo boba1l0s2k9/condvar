@@ -1,3 +1,5 @@
+/* jshint strict:true, proto:true, -W093 */
+
 (function(){
 "use strict";
 
@@ -11,25 +13,26 @@ var global = {
 };
 
 function CondVar () {
-    this.__proto__.int_data   = undefined;
-    this.__proto__.int_cb     = undefined;
-    this.__proto__.int_end_cb = undefined;
-    this.__proto__.int_croak  = undefined;
-    this.__proto__.int_ready  = false;
-    this.__proto__.int_begin  = 0;
-    this.__proto__.int_id     = global.total_cv_count++;
+    this.constructor.prototype.int_data   = undefined;
+    this.constructor.prototype.int_cb     = undefined;
+    this.constructor.prototype.int_end_cb = undefined;
+    this.constructor.prototype.int_croak  = undefined;
+    this.constructor.prototype.int_ready  = false;
+    this.constructor.prototype.int_begin  = 0;
+    this.constructor.prototype.int_id     = global.total_cv_count++;
 
-    if (arguments.length
-            && typeof arguments[0]['cb'] !== 'undefined')
-        this.__proto__.int_cb = arguments[0]['cb'];
+    if (arguments.length &&
+            typeof arguments[0].cb !== 'undefined')
+        this.constructor.prototype.int_cb = arguments[0].cb;
 
     var cb = function () {
-        this.__proto__.send(null);
+        this.constructor.prototype.send(null);
     }.bind(this);
 
-    cb.__proto__ = this.__proto__;
+    /* TODO cleaner solution */
+    cb.__proto__ = this.constructor.prototype;
 
-    if (!global.open_cv_count++)
+    if (!(global.open_cv_count++))
         global.timer_keepalive = setInterval(function(){}, 4e9);
 
     return cb;
@@ -47,7 +50,8 @@ CondVar.prototype.send = function (data) {
 };
 
 CondVar.prototype.recv = function () {
-    var recursive_wait = false;
+    var recursive_wait = false,
+        have_events;
 
     if (!this.int_ready) {
         global.waiting++;
@@ -55,7 +59,7 @@ CondVar.prototype.recv = function () {
             recursive_wait = true;
         else
             do {
-                var have_events = runOnce();
+                have_events = runOnce();
             } while (have_events && !this.int_ready);
         global.waiting--;
     }
@@ -92,7 +96,7 @@ CondVar.prototype.croak = function (err) {
 CondVar.prototype.begin = function (cb) {
     if (typeof cb !== 'undefined') this.int_end_cb = cb;
     this.int_begin++;
-}
+};
 
 CondVar.prototype.end = function (cb) {
     this.int_begin--;
@@ -106,7 +110,7 @@ CondVar.prototype.end = function (cb) {
         this.int_end_cb(this);
     else
         this.send();
-}
+};
 
 module.exports = CondVar;
-}())
+}());

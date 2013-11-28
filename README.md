@@ -313,6 +313,7 @@ license text.
      [approaches][promise-perf].
    * Mention that our dependency uvrun may not work on Windows until you modify
      package.json as descriped [here][uvrun-patch].
+   * Make tests verify what happens asynchronously, after delay.
 
 [AE]: http://search.cpan.org/~mlehmann/AnyEvent-7.05/lib/AnyEvent.pm
 [AE::CV]: http://search.cpan.org/~mlehmann/AnyEvent-7.05/lib/AnyEvent.pm#CONDITION_VARIABLES

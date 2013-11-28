@@ -9,12 +9,12 @@ var cv;
  * EXAMPLE1: Trigger recursive blocking error
  */
 console.log("EXAMPLE1");
-var cv1 = new Cv,
-    cv2 = new Cv;
+var cv1 = new Cv();
+    cv2 = new Cv();
 
 // Try to wait for cv2 before sending cv1 (cv2 recv will fail).
 setTimeout(function(){
-    assert.throws( function(){ cv2.recv() },
+    assert.throws( function(){ cv2.recv(); },
         /^recursive blocking wait attempted$/
     );
     cv1.send("cv1value");
@@ -39,13 +39,13 @@ assert.strictEqual(cv1.recv(), 'cv1value');
  * EXAMPLE2: Use croak() to propogate an error
  */
 console.log("EXAMPLE2");
-cv = new Cv;
+cv = new Cv();
 setTimeout(function(){
     console.log("calling cv.croak('cv2value')\n");
     cv.croak("cv2value");
 }, 100);
 
-assert.throws( function(){ cv.recv() },
+assert.throws( function(){ cv.recv(); },
     /^cv2value$/
 );
 
@@ -55,12 +55,12 @@ assert.throws( function(){ cv.recv() },
  * EXAMPLE3: Verify cv properties / behavior
  */
 console.log("EXAMPLE3");
-cv = new Cv;
+cv = new Cv();
 
-assert.strictEqual(typeof cv.cb(),             'undefined', 'cb should be undef')
-assert.strictEqual(typeof cv.cb(function(){}), 'function',  'should be func')
-assert.strictEqual(typeof cv.cb(),             'function',  'should be func')
-assert.ifError(cv.cb(null),                                 'should be false')
+assert.strictEqual(typeof cv.cb(),             'undefined', 'cb should be undef');
+assert.strictEqual(typeof cv.cb(function(){}), 'function',  'should be func');
+assert.strictEqual(typeof cv.cb(),             'function',  'should be func');
+assert.ifError(cv.cb(null),                                 'should be false');
 assert.strictEqual(cv.ready(),                  false,      'should be false');
 
 setTimeout(function(){
@@ -84,7 +84,7 @@ console.log("cv.recv() finished, got: '" + result1 + "'\n");
 console.log("EXAMPLE4");
 
 setTimeout(function(){
-    assert(1 == 2, 'exception should have fired and prevented this')
+    assert(1 == 2, 'exception should have fired and prevented this');
 },  500);
 
 process.once('uncaughtException', function (e) {
@@ -95,14 +95,14 @@ process.once('uncaughtException', function (e) {
 // Ask for something to be run in the main node.js loop (i.e. after the rest of 
 // this script has ended)
 process.nextTick(function(){
-    var cv = new Cv;
+    var cv = new Cv();
 
     // Ask for something additional to be run in the main node.js loop at the 
     // next turn of the loop (i.e. not now)
-    process.nextTick(function(){ console.log("this does print, second") });
+    process.nextTick(function(){ console.log("this does print, second"); });
 
     // This runs even later
-    setTimeout(function(){ cv.send("nextTick result") },  100);
+    setTimeout(function(){ cv.send("nextTick result"); },  100);
 
     console.log("this gets printed first");
 
