@@ -314,6 +314,28 @@ license text.
    * Mention that our dependency uvrun may not work on Windows until you modify
      package.json as descriped [here][uvrun-patch].
    * Make tests verify what happens asynchronously, after delay.
+   * Port example/cv_err_test.js to TAP tests in test/.
+
+# Why not use this module
+
+   * There's no standards group focused on this way of doing things, as
+     compared to Promises defined in [CommonJS][promises-a], or [generators][]
+     which are expected in the next JavaScript standard: ES6.
+   * There's little hope that this same approach can be made to work for
+     JavaScript running in browsers.  It certainly doesn't work now, though I
+     don't think it's even possible: no browsers allow JavaScript to
+     explicitly, synchronously advance the event loop (see [here][so-js-conc]).
+     Indeed node.js doesn't either, though with [UVRun][] which exposes the
+     necessary internals of node.js it's at least possible.
+   * I suspect many would argue that this way of doing things isn't very
+     JavaScript-like, or node.js-like.  This module gives you a way to achieve 
+     some linear execution rather than depending on callbacks exclusively.
+   * This module depends on node.js behaviors that could in principle change
+     (though I doubt they will).  Specifically, it depends on the ability for
+     JavaScript to be able to explicitly, synchronously advance the event
+     loop.
+   * It's a very young module.  It's not tried and true.  There's no user base,
+     no community.  It works or it doesn't.  You're on your own.
 
 [AE]: http://search.cpan.org/~mlehmann/AnyEvent-7.05/lib/AnyEvent.pm
 [AE::CV]: http://search.cpan.org/~mlehmann/AnyEvent-7.05/lib/AnyEvent.pm#CONDITION_VARIABLES
@@ -339,4 +361,6 @@ license text.
 [blog-unravel]: http://www.gameclosure.com/blog/2013/03/unravelling-nested-callbacks-with-ff
 [promise-perf]: http://thanpol.as/javascript/promises-a-performance-hits-you-should-be-aware-of/
 [uvrun-patch]: https://github.com/creationix/uvrun/pull/1
-
+[promises-a]: http://wiki.commonjs.org/wiki/Promises/A
+[generators]: http://wiki.ecmascript.org/doku.php?id=harmony:generators
+[so-js-conc]: http://stackoverflow.com/questions/2734025/is-javascript-guaranteed-to-be-single-threaded/2734311
