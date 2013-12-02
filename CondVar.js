@@ -19,15 +19,17 @@ var global = {
 
 /**
  * A function that will be called when a conditional variable is triggered.
- * @callback CondVar.condvar_callback
+ * @callback condvar_callback
+ * @memberof module:CondVar
  * @param {CondVar} cv - A conditional variable that is ready.
  */
 
 /**
  * Object that can be passed to the constructor to set options.
- * @typedef CondVar.condvar_options
+ * @typedef condvar_options
+ * @memberof module:CondVar
  * @type {object}
- * @property {condvar_callback} cb - Callback when the conditional variable is
+ * @property {module:CondVar.condvar_callback} cb - Callback when the conditional variable is
  * triggered.
  */
 
@@ -48,9 +50,9 @@ var global = {
  *  setTimeout(cv, 1000);
  *  cv.recv();
  *  console.log("This will be printed after 1 second of waiting");
- * @constructor module:CondVar
- * @param {condvar_options} [options] - Arguments, can set callback.
- * @returns {CondVar|function} Returns a conditional variable that can also be
+ * @class module:CondVar
+ * @param {module:CondVar.condvar_options} [options] - Arguments, can set callback.
+ * @return {CondVar|function} Returns a conditional variable that can also be
  * used as a callback (e.g. calling it causes the conditional variable to be
  * triggered).
  */
@@ -95,9 +97,10 @@ function CondVar () {
  *  });
  *
  *  cv.send('hello');
- * @method module:CondVar#send
+ * @method send
+ * @memberof module:CondVar#
  * @param {*} data - Value to store, makes conditional variable ready.
- * @returns Nothing.
+ * @return Nothing.
  */
 CondVar.prototype.send = function (data) {
     this.int_data  = data;
@@ -140,8 +143,9 @@ CondVar.prototype.send = function (data) {
  *  setTimeout(function(){ cv2.recv(); cv1.send(); }, 1000);
  *  setTimeout(function(){ cv2.send();             }, 2000);
  *  cv1.recv(); // Because we're already waiting here on cv1
- * @method module:CondVar#recv
- * @returns {*} Whatever was stored by {@link module:CondVar#send|send()}
+ * @method recv
+ * @memberof module:CondVar#
+ * @return {*} Whatever was stored by {@link module:CondVar#send|send()}
  */
 CondVar.prototype.recv = function () {
     var recursive_wait = false,
@@ -179,8 +183,9 @@ CondVar.prototype._stop = function () {
 
 /**
  * If `send()` or `croak()` has been called this returns `true`, else `false`.
- * @method module:CondVar#ready
- * @returns {boolean}
+ * @method ready
+ * @memberof module:CondVar#
+ * @return {boolean}
  */
 CondVar.prototype.ready = function () {
     return this.int_ready;
@@ -193,10 +198,11 @@ CondVar.prototype.ready = function () {
  * is a function.  The callback will have the conditional variable as its only
  * argument, and any calls to `recv()` on that object will return their value
  * immediately.
- * @method module:CondVar#cb
- * @property {condvar_callback} [cb] - Callback when conditional variable is
+ * @method cb
+ * @memberof module:CondVar#
+ * @param {condvar_callback} [cb] - Callback when conditional variable is
  * ready.
- * @returns {condvar_callback}
+ * @return {condvar_callback}
  */
 CondVar.prototype.cb = function (cb) {
     if (typeof cb === 'undefined') return this.int_cb;
@@ -221,9 +227,10 @@ CondVar.prototype.cb = function (cb) {
  *  } catch (e) {
  *      console.log("This will get printed: " + e);
  *  }
- * @method module:CondVar#croak
- * @property {*} [err] - Error value.
- * @returns Nothing.
+ * @method croak
+ * @memberof module:CondVar#
+ * @param {*} [err] - Error value.
+ * @return Nothing.
  */
 CondVar.prototype.croak = function (err) {
     this.int_croak = (typeof err === 'undefined') ? null : err;
@@ -260,10 +267,11 @@ CondVar.prototype.croak = function (err) {
  *
  *  cv2.recv();
  *  console.log("This won't get printed until all hosts have bene pinged");
- * @method module:CondVar#begin
- * @property {condvar_callback} [cb] - Callback when conditional variable is
+ * @method begin
+ * @memberof module:CondVar#
+ * @param {condvar_callback} [cb] - Callback when conditional variable is
  * ready.
- * @returns Nothing.
+ * @return Nothing.
  */
 CondVar.prototype.begin = function (cb) {
     if (typeof cb !== 'undefined') this.int_end_cb = cb;
@@ -274,8 +282,9 @@ CondVar.prototype.begin = function (cb) {
  * Decrement an internal counter.  If the counter becomes zero and a callback
  * was provided to `begin()` then it is called now, else `send()` is called
  * without a value. {@link module:CondVar#begin|begin()}.
- * @method module:CondVar#end
- * @returns Nothing.
+ * @method end
+ * @memberof module:CondVar#
+ * @return Nothing.
  */
 CondVar.prototype.end = function () {
     this.int_begin--;
