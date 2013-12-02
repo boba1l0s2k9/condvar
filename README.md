@@ -66,6 +66,8 @@ flow: if it works well for your needs, use it!
 
 # API
 
+See {@link module:CondVar|CondVar()}.
+
 ## new CondVar ( [ {"cb": function} ] )
 
 The object returned by requesting a new instance from this module has several 
@@ -315,6 +317,8 @@ license text.
      package.json as descriped [here][uvrun-patch].
    * Make tests verify what happens asynchronously, after delay.
    * Port example/cv_err_test.js to TAP tests in test/.
+   * Use some kind of inline API documentation.
+   * Add test to verify API documentation coverage.
 
 # Why not use this module
 
