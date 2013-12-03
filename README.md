@@ -66,8 +66,6 @@ flow: if it works well for your needs, use it!
 
 # API
 
-See {@link module:CondVar|CondVar()}.
-
 ## new CondVar ( [ {"cb": function} ] )
 
 The object returned by requesting a new instance from this module has several 
@@ -281,9 +279,9 @@ doing so would corrupt the stack and very likely cause node.js to crash.
 
 # CREDITS
 
-This module was originally written by [boba1l0s2k9@outlook.com][author] with 
-the intent to create a node.js module that provides the same behavior and API 
-as [AnyEvent::CondVar][AE::CV] does for Perl.
+This module was originally written by <boba1l0s2k9@outlook.com> with the intent
+to create a node.js module that provides the same behavior and API as 
+[AnyEvent::CondVar][AE::CV] does for Perl.
 
 The code in this module is trivial, so really all the credit goes to
 [Marc Lehmann][marc], the author of the Perl module of which this is just a 
@@ -348,7 +346,6 @@ license text.
 [Q]: https://github.com/kriskowal/q
 [node-wiki-async]: https://github.com/joyent/node/wiki/Modules#wiki-async-flow
 [UVRun]: https://github.com/creationix/uvrun
-[author]: mailto:boba1l0s2k9@outlook.com
 [marc]: http://software.schmorp.de/
 [tim]: http://creationix.com/
 [uv_run()]: https://github.com/joyent/libuv/blob/v0.10/include/uv.h#L273
