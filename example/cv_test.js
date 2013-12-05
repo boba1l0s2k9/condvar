@@ -1,4 +1,12 @@
-var CondVar = require('./CondVar.js');
+(function(){
+var CondVar;
+try { CondVar = require('./CondVar.js');  } catch (a) {
+try { CondVar = require('../CondVar.js'); } catch (b) {
+try { CondVar = require('condvar');       } catch (c) {
+    throw "Failed to find 'condvar' module";
+}}}
+
+if (require.main !== module) return;
 
 console.log("starting\n");
 
@@ -81,3 +89,4 @@ setTimeout(function(){ cv_cb.send("cb result"); },  1000);
 
 console.log("waiting on callback cv to finish");
 
+}());

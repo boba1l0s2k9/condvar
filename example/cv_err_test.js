@@ -1,5 +1,13 @@
+(function(){
+var Cv;
+try { Cv = require('./CondVar.js');  } catch (a) {
+try { Cv = require('../CondVar.js'); } catch (b) {
+try { Cv = require('condvar');       } catch (c) {
+    throw "Failed to find 'condvar' module";
+}}}
+if (require.main !== module) return;
+
 var assert = require('assert');
-var Cv     = require('./CondVar.js');
 
 console.log("starting\n");
 
@@ -115,3 +123,4 @@ process.nextTick(function(){
 
 console.log("nextTick stuff gets run after this");
 
+}());

@@ -92,8 +92,8 @@ function run() {
 }
 
 
-run('../example/*.js');
-run('../compared/*.js');
-run('../test/*.js');
-run('../*.js');
+run(__dirname + '/../example/*.js');
+run(__dirname + '/../compared/*.js');
+run(__dirname + '/../test/*.js');
+run(__dirname + '/../*.js');
 
