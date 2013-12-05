@@ -26,12 +26,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-
-/* jshint node: true, loopfunc: true */
 "use strict";
-var JSHINT = require('jshint').JSHINT,
-    glob = require('../node_modules/tap/node_modules/glob'),
-    fs = require('fs');
+
+var JSHINT   = require('jshint').JSHINT,
+    glob     = require(__dirname + '/../node_modules/tap/node_modules/glob'),
+    fs       = require('fs'),
+    cfg_file = __dirname + '/../.jshintrc',
+    config   = fs.readFileSync(cfg_file).toString();
+
+// Strip comments, parse as JSON
+config = JSON.parse(config.replace(/\/\*(?:(?!\*\/)[\s\S])*\*\//g, "")
+                          .replace(/\/\/[^\n\r]*/g, ""));
 
 var TEST_COUNT = 0;
 var FAIL_COUNT = 0;
@@ -41,9 +46,9 @@ process.on('exit', function () {
                          "# fail " + FAIL_COUNT + "\n");
 });
 
-function runFile (fname, opt) {
+function runFile (fname, opt) { /* jshint loopfunc:true */
     var src = fs.readFileSync(fname, 'utf-8');
-    var ok  = JSHINT(src, opt);
+    var ok  = JSHINT(src, config);
 
     process.stdout.write( (ok ? "ok " : "not ok "      ) +
                           (++TEST_COUNT + " - " + fname) +
@@ -56,6 +61,8 @@ function runFile (fname, opt) {
         process.stderr.write("# Failed test " + fname + "\n#\n#");
         for (var i=0; i < errors.length; i++) {
             var line = errors[i];
+            if (line === null)
+                continue;
             var buf  = '  ' + line.id + ' ' +
                         line.raw.replace(/\{(.)\}/, function (m) { return line[m[1]]; }) +
                        ' at line ' + line.line + "\n#\n#" +
@@ -92,8 +99,8 @@ function run() {
 }
 
 
+/*run(__dirname + '/../compared/*.js');
 run(__dirname + '/../example/*.js');
-run(__dirname + '/../compared/*.js');
-run(__dirname + '/../test/*.js');
+run(__dirname + '/../test/*.js');*/
 run(__dirname + '/../*.js');
 

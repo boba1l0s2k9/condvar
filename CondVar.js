@@ -1,15 +1,12 @@
-/* jshint strict:true, proto:true, -W093 */
-
-(function(){
 "use strict";
 
 var runOnce = require('uvrun').runOnce;
 
-var global = {
-     total_cv_count: 0,
-      open_cv_count: 0,
+var global_state = {
+    total_cv_count:  0,
+    open_cv_count:   0,
     timer_keepalive: null,
-            waiting: 0
+    waiting:         0
 };
 
 /**
@@ -29,8 +26,8 @@ var global = {
  * @typedef condvar_options
  * @memberof module:CondVar
  * @type {object}
- * @property {module:CondVar.condvar_callback} cb - Callback when the conditional variable is
- * triggered.
+ * @property {module:CondVar.condvar_callback} cb - Callback when the 
+ * conditional variable is triggered.
  */
 
 /**
@@ -51,19 +48,20 @@ var global = {
  *  cv.recv();
  *  console.log("This will be printed after 1 second of waiting");
  * @class module:CondVar
- * @param {module:CondVar.condvar_options} [options] - Arguments, can set callback.
+ * @param {module:CondVar.condvar_options} [options] - Arguments, can set 
+ * callback.
  * @return {CondVar|function} Returns a conditional variable that can also be
  * used as a callback (e.g. calling it causes the conditional variable to be
  * triggered).
  */
-function CondVar () {
+function CondVar () { /* jshint proto:true */
     this.constructor.prototype.int_data   = undefined;
     this.constructor.prototype.int_cb     = undefined;
     this.constructor.prototype.int_end_cb = undefined;
     this.constructor.prototype.int_croak  = undefined;
     this.constructor.prototype.int_ready  = false;
     this.constructor.prototype.int_begin  = 0;
-    this.constructor.prototype.int_id     = global.total_cv_count++;
+    this.constructor.prototype.int_id     = global_state.total_cv_count++;
 
     if (arguments.length &&
             typeof arguments[0].cb !== 'undefined')
@@ -76,8 +74,8 @@ function CondVar () {
     /* TODO cleaner solution */
     cb.__proto__ = this.constructor.prototype;
 
-    if (!(global.open_cv_count++))
-        global.timer_keepalive = setInterval(function(){}, 4e9);
+    if (!(global_state.open_cv_count++))
+        global_state.timer_keepalive = setInterval(function(){}, 4e9);
 
     return cb;
 }
@@ -152,18 +150,18 @@ CondVar.prototype.recv = function () {
         have_events;
 
     if (!this.int_ready) {
-        global.waiting++;
-        if (global.waiting > 1)
+        global_state.waiting++;
+        if (global_state.waiting > 1)
             recursive_wait = true;
         else
             do {
                 have_events = runOnce();
             } while (have_events && !this.int_ready);
-        global.waiting--;
+        global_state.waiting--;
     }
 
-    if (--global.open_cv_count === 0)
-        clearInterval(global.timer_keepalive);
+    if (--global_state.open_cv_count === 0)
+        clearInterval(global_state.timer_keepalive);
 
     if (recursive_wait) throw "recursive blocking wait attempted";
 
@@ -178,7 +176,7 @@ CondVar.prototype.recv = function () {
  * @private
  */
 CondVar.prototype._stop = function () {
-    clearInterval(global.timer_keepalive);
+    clearInterval(global_state.timer_keepalive);
 };
 
 /**
@@ -204,7 +202,7 @@ CondVar.prototype.ready = function () {
  * ready.
  * @return {condvar_callback}
  */
-CondVar.prototype.cb = function (cb) {
+CondVar.prototype.cb = function (cb) { /* jshint -W093 */
     if (typeof cb === 'undefined') return this.int_cb;
     return this.int_cb = cb;
 };
@@ -301,4 +299,3 @@ CondVar.prototype.end = function () {
 };
 
 module.exports = CondVar;
-}());

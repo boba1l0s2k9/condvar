@@ -1,5 +1,5 @@
-/* jshint node: true */
 "use strict";
+
 var test_jsdoc = require(__dirname + '/TestForJSDoc.js'),
     glob = require(__dirname + '/../node_modules/tap/node_modules/glob');
 

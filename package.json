@@ -1,6 +1,6 @@
 {
     "name": "condvar",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "description": "Conditional variables to simplify asynchronous code",
     "author": "boba1l0s2k9 <boba1l0s2k9@outlook.com>",
     "homepage": "https://github.com/boba1l0s2k9/condvar",
